@@ -83,7 +83,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --fil
 
 - Download this repository
 ```sh
-git clone https://github.com/yourorg/netpilot
+git clone https://github.com/Mali-prod/NetPilot.git
 ```
 
 4. **Laravel Sail**
