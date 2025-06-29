@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeviceRequest;
 use App\Models\Device;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -25,12 +27,22 @@ class DeviceController extends Controller
                     $response = $client->request('get', $device['method']."://".$device['endpoint']."/rest/system/resource", [
                         'auth' => [$device['username'], $device['password']],
                         'headers' => ['Content-Type' => 'application/json'],
-                        'timeout' => 0.5
+                        'timeout' => $device['timeout'] ?? 3,
+                        'connect_timeout' => $device['timeout'] ?? 3,
+                        'verify' => false // Disable SSL verification for testing
                     ]);
         
                     $device['online'] = $response->getStatusCode();
+                } catch (ConnectException $e) {
+                    $device['online'] = null;
+                    $device['error'] = 'Connection failed: ' . $e->getMessage();
+                } catch (RequestException $e) {
+                    $device['online'] = null;
+                    $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : 'N/A';
+                    $device['error'] = 'Request failed (Status: ' . $statusCode . '): ' . $e->getMessage();
                 } catch (\Exception $e) {
                     $device['online'] = null;
+                    $device['error'] = 'Unexpected error: ' . $e->getMessage();
                 }
             }
         }
@@ -48,14 +60,44 @@ class DeviceController extends Controller
             $response = $client->request('get', $device['method']."://".$device['endpoint']."/rest/system/resource", [
                 'auth' => [$device['username'], $device['password']],
                 'headers' => ['Content-Type' => 'application/json'],
-                'timeout' => 0.5
+                'timeout' => $device['timeout'] ?? 3,
+                'connect_timeout' => $device['timeout'] ?? 3,
+                'verify' => false // Disable SSL verification for testing
             ]);
 
             $data = json_decode($response->getBody(), true);
 
             return view('devices.index',['resource'=> $data, 'device'=> $device, 'deviceParam' => $device['id']]);
+        } catch (ConnectException $e) {
+            return view('devices.index', [
+                'resource'=> null, 
+                'device'=> $device, 
+                'conn_error' => 'Connection failed: ' . $e->getMessage(), 
+                'deviceParam' => $device['id']
+            ]);
+        } catch (RequestException $e) {
+            $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : 'N/A';
+            $errorMessage = 'Request failed (Status: ' . $statusCode . '): ' . $e->getMessage();
+            
+            if ($statusCode == 401) {
+                $errorMessage = 'Authentication failed: Invalid username or password';
+            } elseif ($statusCode == 404) {
+                $errorMessage = 'RouterOS API endpoint not found. Make sure API is enabled in System > API';
+            }
+            
+            return view('devices.index', [
+                'resource'=> null, 
+                'device'=> $device, 
+                'conn_error' => $errorMessage, 
+                'deviceParam' => $device['id']
+            ]);
         } catch (\Exception $e) {
-            return view('devices.index', ['resource'=> null, 'device'=> $device, 'conn_error' => $e->getMessage(), 'deviceParam' => $device['id']]);
+            return view('devices.index', [
+                'resource'=> null, 
+                'device'=> $device, 
+                'conn_error' => 'Unexpected error: ' . $e->getMessage(), 
+                'deviceParam' => $device['id']
+            ]);
         }
     }
 

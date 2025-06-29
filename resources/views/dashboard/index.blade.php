@@ -62,7 +62,15 @@
                             Unreachable
                         </p>
                     </address>
+                    @if(isset($device['error']))
+                        <div class="alert alert-warning">
+                            <small><strong>Error:</strong> {{ $device['error'] }}</small>
+                        </div>
+                    @endif
                     <a class="btn btn-outline-dark btn-lg btn-block" href="{{ route ('Devices.edit', $device['id']) }}">Edit this device</a>
+                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('device.diagnostic') }}?endpoint={{$device['endpoint']}}&username={{$device['username']}}&method={{$device['method']}}">
+                        🔍 Diagnose Connection
+                    </a>
                 @endif
                 </div>
             </div>

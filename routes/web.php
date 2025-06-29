@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BridgeController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\DeviceDiagnosticController;
 use App\Http\Controllers\DhcpController;
 use App\Http\Controllers\DnsController;
 use App\Http\Controllers\InterfacesController;
@@ -46,7 +47,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/{Device}/Overview','indexDevice')->name("Devices.index")->middleware(DeviceControlMiddleware::class);
         Route::get('/Device/create','create')->name("Devices.create");
         Route::post('/Device','store')->name("Devices.store");
+    });
 
+    // Diagnostic route for troubleshooting device connections
+    Route::controller(DeviceDiagnosticController::class)->group(function () {
+        Route::get('/device/diagnostic','testConnection')->name("device.diagnostic");
     });
 
     Route::middleware(DeviceControlMiddleware::class)->group(function() {

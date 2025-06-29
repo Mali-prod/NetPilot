@@ -1,21 +1,12 @@
-# MikroKontrol - Simple RouterOS SDN Controller
+# NET PILOT - Simple RouterOS SDN Controller
 
-![Mikrotik Logo](https://mikrotik.com/img/mtv2/logo_fb_2.png)
+![NET PILOT Logo](https://srv708-files.hstgr.io/8b1298aa6097f33e/files/public_html/images/artemis-logo.png)
 
-A simple Laravel WebUI for controling devices using RouterOS via their REST API.
+A simple Laravel WebUI for controlling devices using RouterOS via their REST API.
 
 Main template is [Star Admin 2 by BootstrapDash](https://demo.bootstrapdash.com/star-admin2-free/template/index.html)
 
 Login is based on [Finance Mobile Application-UX/UI Design Screen One login page](https://codepen.io/sowg/pen/qBXjXoE) (slight background changes)
-
-## Interface
-
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/682ab72e-2f9d-4e02-83f3-788ca83171b8)
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/dc1fe3bb-ad2b-4e53-8791-1f567ee08fae)
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/16df5adf-965f-4006-84e6-597d423bf646)
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/3675c74e-fa37-422c-975b-c9d84a9c3b3b)
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/4fc3d553-3f7b-4f2f-bbf3-10a34be4b691)
-![imagem](https://github.com/freemann350/MikroKontrol/assets/25934321/235287d5-26f3-46fb-9772-1af768b6bb29)
 
 ## Features:
 
@@ -92,7 +83,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --fil
 
 - Download this repository
 ```sh
-git clone https://github.com/freemann350/MikroKontrol
+git clone https://github.com/yourorg/netpilot
 ```
 
 4. **Laravel Sail**
@@ -121,7 +112,7 @@ sail artisan db:seed
 5. Possible permission errors
 - If there is any sort of permission problem, try running the chown command using root (alter the variables below to your user and folder)
 ```sh
-chown -R <YOUR_USER> <MikroKontroller_FOLDER>
+chown -R <YOUR_USER> <NET_PILOT_FOLDER>
 ```
 Everything should up and running now. The credentials are as follows:
 
@@ -131,3 +122,7 @@ Admin default account: `admin@example.com`
 User default account: `user@example.com`
 
 All passwords are `password`
+
+---
+
+© 2025 Artemis Technologies Ug Ltd

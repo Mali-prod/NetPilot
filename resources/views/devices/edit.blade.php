@@ -5,9 +5,9 @@
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add new MikroTik device</h4>
+            <h4 class="card-title">Edit RouterOS device</h4>
             <p class="card-description">
-                Here you can add a new MikroTik device for you to control
+                Here you can edit a RouterOS device you control
             </p>
             <form method="POST" action="{{route('Devices.update',$device['id'])}}" enctype="multipart/form-data">
             @csrf
@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-form-label">Device name</label>
                 <div class="col-sm-12">
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{$device['name']}}" placeholder="My Mikrotik">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{$device['name']}}" placeholder="My RouterOS Device">
                     @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}

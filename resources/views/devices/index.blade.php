@@ -54,8 +54,29 @@
                 </div>
             </div>
             @else
-            <p>Could not load info.</p>
-            <p>Error: <b>{{$conn_error}}</b></p>
+            <div class="alert alert-danger">
+                <h5>❌ Connection Failed</h5>
+                <p><strong>Error:</strong> {{$conn_error}}</p>
+                
+                <hr>
+                <h6>🔧 Troubleshooting Steps:</h6>
+                <ol>
+                    <li><strong>Check RouterOS API:</strong> Make sure API is enabled in System > API</li>
+                    <li><strong>Verify Credentials:</strong> Check username and password are correct</li>
+                    <li><strong>Network Connectivity:</strong> Ensure router is reachable from this network</li>
+                    <li><strong>Firewall Rules:</strong> Check if firewall is blocking API access</li>
+                    <li><strong>SSL Certificate:</strong> If using HTTPS, verify SSL certificate is valid</li>
+                </ol>
+                
+                <div class="mt-3">
+                    <a href="{{ route('device.diagnostic') }}?endpoint={{$device['endpoint']}}&username={{$device['username']}}&method={{$device['method']}}" class="btn btn-primary">
+                        🔍 Run Connection Diagnostic
+                    </a>
+                    <a href="{{ route('Devices.edit', $device['id']) }}" class="btn btn-secondary">
+                        ✏️ Edit Device Settings
+                    </a>
+                </div>
+            </div>
             @endif
         </div>
     </div>
