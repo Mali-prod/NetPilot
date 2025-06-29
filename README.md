@@ -1,6 +1,6 @@
 # NET PILOT - Simple RouterOS SDN Controller
 
-![NET PILOT Logo](https://srv708-files.hstgr.io/8b1298aa6097f33e/files/public_html/images/artemis-logo.png)
+
 
 A simple Laravel WebUI for controlling devices using RouterOS via their REST API.
 
